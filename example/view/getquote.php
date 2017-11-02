@@ -88,7 +88,30 @@ $category_data = GetAllCategory()->data;
             }
         });
     }
-
+    function upload_file() {
+        handleLoading();
+        var i = 1;
+        var file_data = [];
+        var form_data = new FormData();
+        for (i = 0; i < ($("#translate_file_1")[0].files).length; i++) {
+            file_data[i] = $("#translate_file_1")[0].files[i];
+            form_data.append('file[]', file_data[i]);
+        }
+        $.ajax({
+            url: './Uploadfiles.php', // point to server-side PHP script 
+            dataType: 'text', // what to expect back from the PHP script, if anything
+            cache: false,
+            contentType: false,
+            processData: false,
+            data: form_data,
+            type: 'POST',
+            success: function (php_script_response) {
+                handleLoading();
+                console.log('File uploaded successfully');
+            }
+        });
+//
+    }
     $('#quote').click(function () {
         handleLoading();
         var formData = new FormData();
